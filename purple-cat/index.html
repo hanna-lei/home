@@ -1,0 +1,48 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Holy Purple Cat Payment</title>
+        <script type="text/javascript">
+            const unitPrice = 0.00000000000000000000000000000001;
+            let count = 0;
+
+            window.addEventListener('load', function(e) {
+                document.querySelector("#unitPrice").innerText = unitPrice.toFixed(32);
+            }, false);
+
+            function payButtonClicked() {
+                let emoji = document.querySelector("#cat");
+                count += 1;
+                if (count === 1) {
+                    alert("Transaction complete! Now the purple cat is happy :D");
+                    emoji.innerText = "😈";
+                } else {
+                    let donated = (count-1) * unitPrice;
+                    alert(`You have paid ${count} times. Thanks for the ${donated.toFixed(32)} cent donation! NO REFUNDS!!!!`);
+                }
+                let textBoxValue = document.querySelector("#txt").value
+                if (textBoxValue.length) {
+                    alert(`${textBoxValue} to you too.`);
+                }
+                emoji.style.paddingLeft = `${parseInt(document.querySelector("#cat").style.paddingLeft) + 10}pt`;
+            }
+        </script>
+    </head>
+    <body>
+        <h1>Holy <span style="color:rgb(123, 0, 255);">Purple</span> Cat Payments</h1>
+        <h2>99% Discount and 100 Year Free Trial</h2>
+        <h3>ONLY <span id="unitPrice"></span> cents</h3>
+        <div id="cat" style="font-size: 100pt;background-color: yellow; padding-left:0pt; margin-left:0pt;">
+            👿
+        </div>
+        </div>No refunds</div>
+        <div>
+            <textarea id="txt" rows="6" style="width:100%" placeholder="say something"></textarea>
+        </div>
+        <div style="padding-top:50pt;">
+            <!--im just a comment -->
+            <button onclick="payButtonClicked()" style="width: 100pt; font-family: Georgia;font-size: 20pt;background: rgb(232, 203, 255);color: rgb(49, 0, 89)">Pay here</button>
+        </div>
+    </body>
+</html>

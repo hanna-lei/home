@@ -1,0 +1,160 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>Buy TanishO's Cereal</title>
+        <style>
+            .review-font {
+                font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; 
+            }
+        </style>
+        <script type="text/javascript">
+            let left = 3000000;
+            let bought = 0;
+
+            
+            function update() {
+                getDisplayBought().innerText = bought;
+                if (left > 1) {
+                    getDisplayLeft().innerText = left + " boxes left in stock";
+                } else if (left == 1) {
+                    getDisplayLeft().innerText = "1 box left in stock";
+                } else {
+                    getDisplayLeft().innerText = "Out of Stock";
+                }
+            }
+            function getDisplayBought() {
+                return document.querySelector("#boughtNum");
+            }
+            function getDisplayLeft() {
+                return document.querySelector("#leftNum");
+            }
+            function addButtonClicked() {
+                if (left > 0) {
+                    left -= 1;
+                    bought += 1;
+                    console.log(left, bought);
+                    update();
+                } else {
+                    alert("We're out of stock!!! Stop buying!!!");
+                }
+            }
+            function minusButtonClicked() {
+                if (bought > 0) {
+                    left += 1;
+                    bought -= 1;
+                    console.log(left, bought);
+                    update();
+                }
+            }
+            function boughtClicked() {
+                let answer = prompt(`Are you SURE you want to buy ${bought} boxes of TanishO's?\nType YES for yes and NO for no.`);
+                if (answer.toLowerCase() == "yes") {
+                    bought = 0;
+                    update();
+                    alert("Estimated Shipping Time: Until you get better lightbulbs");
+                }
+            }
+            function submitButtonClicked() {
+                let reviewNameElement = document.getElementById("reviewName");
+                let reviewTitleElement = document.getElementById("reviewTitle");
+                let reviewBodyElement = document.getElementById("reviewBody");
+
+                let reviewName = reviewNameElement.value;
+                let reviewTitle = reviewTitleElement.value;
+                let reviewBody = reviewBodyElement.value;
+
+                let reviewDisplayTitle = document.querySelector("#reviewDisplayTitle");
+                let reviewDisplayName = document.querySelector("#reviewDisplayName");
+                let reviewDisplayBody = document.querySelector("#reviewDisplayBody");
+
+                if (reviewName == "" || reviewTitle == "" || reviewBody == "") {
+                    alert("Please fill in all areas.");
+                } else {
+                    reviewDisplayTitle.innerText = reviewTitle;
+                    reviewDisplayName.innerText = `By: ${reviewName}, Written on: ${new Date().toLocaleDateString('en-us', { year:"numeric", month:"short", day:"numeric"}) }`;
+                    reviewDisplayBody.innerText = reviewBody;
+
+                    reviewNameElement.value = "";
+                    reviewTitleElement.value = "";
+                    reviewBodyElement.value = "";
+                }
+            }
+            window.addEventListener('load', function(e) {
+                update();
+            }, false);
+
+        </script>
+    </head>
+    <body>
+        <div style="display: flex; flex-direction: column; width:100%;align-items: center;gap:15pt;">
+            
+            <img src="img/title.png" style="padding-bottom: 20pt; max-width:80%">
+            
+            
+            <div style="display: flex; flex-direction: row; max-width: 100%; align-items:top; overflow: hidden;flex-wrap:wrap; gap: 15pt; justify-content: space-evenly;">
+                <img src="img/box.png" style="padding-bottom: 100pt; height:auto; width: 380pt; max-width:100%;">
+                <div style="display: flex; flex-direction: column; max-width: 380pt;">
+                    <b style="padding-bottom: 30pt;font-size: 3em;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">TanishO's (Original)</b>
+                    <b style="font-size: 1.75em;padding-bottom: 2em;">Healthy cereal for young growing weirdos</b>
+                    <b style="font-size: 1.75em;padding-bottom: 30pt;">25% less sugar than other cereal</b>
+                    <b style="font-size: 1.75em;padding-bottom: 30pt;">SKINNY TINNY CERTIFIED!</b>
+                    <b style="font-size: 1.75em;padding-bottom: 35pt;">ONLY $4,500 per crumb (5 crumbs included)</b>
+                    <b style="font-size: 1.75em;padding-bottom: 35pt;font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif">Buy now, before it sells out! $22,500 per box!</b>
+                    <b style="font-size: 1.75em;padding-bottom: 30pt;">FREE SHIPPING!!!!</b>
+                    <b id = "leftNum" style="font-size: 25pt;padding-bottom: 35pt;font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;color: red;"></b>
+                    <div style="display: flex; flex-direction: row; gap:10pt; align-items: center; flex-wrap: wrap; justify-content: space-evenly;">
+                        <button onclick="minusButtonClicked()" style="width: 60pt; height: 50pt; size: 40pt; font-family: Georgia;font-size: 30pt;color: rgb(178, 0, 0)">
+                            <b>-</b>
+                        </button>
+
+                        <span id="boughtNum" style="font-size: 20pt;"></span>
+                        <button onclick="addButtonClicked()" style="width: 60pt; height: 50pt; font-size: 40pt; font-family: Georgia;font-size: 30pt;color: rgb(178, 0, 0)">
+                            <b>+</b>
+                        </button>
+                        <button onclick="boughtClicked()" style="font-size: 30pt;font-family:Georgia, 'Times New Roman', Times, serif;height:50pt;">Purchase</button>
+                    </div>
+                </div>
+            </div>
+            
+            <b style="font-size: 3em; text-align: center;">New Flavors Coming Soon!</b>
+            <div style="display: flex; flex-direction: row; gap: 10pt; padding-top: 1em; padding-bottom:1em; flex-wrap: wrap; justify-content: space-evenly;">
+                <div style="display: flex; flex-direction: column; align-items: center;">
+                    <img style="width: 100pt;padding-top: 300 pt;" src="img/strawberry.jpeg">
+                    <b style="font-size: 1.5em; width: 180pt; text-align: center;">Strawberry</b>
+                </div>
+                <div style="display: flex; flex-direction: column; align-items: center;">
+                    <img style="width: 100pt;padding-top: 300 pt;" src="img/grass.jpeg">
+                    <b style="font-size: 1.5em; width: 180pt; text-align: center;">Grass Flavor (cow-friendly)</b>
+                </div>
+                <div style="display: flex; flex-direction: column; align-items: center;">
+                    <img style="width: 100pt; padding-top: 300 pt;" src="img/rotten.jpeg">
+                    <b style="font-size: 1.5em; width: 180pt; text-align: center;">Rotten Radish & Cabbage (weirdo-friendly)</b>
+                </div>
+                <div style="display: flex; flex-direction: column; align-items: center;">
+                    <img style="width: 100pt; padding-top: 300 pt;" src="img/kiwi.jpeg">
+                    <b style="font-size: 1.5em; width: 180pt; text-align: center;">Kiwi</b>
+                </div>
+            </div>
+
+            <div style="font-weight: bold; font-size: 3em;">Write a Review!</div>
+            <div style="display:flex; flex-direction: row; flex-wrap: wrap; justify-content: space-evenly; gap: 10pt; max-width: 90%;">
+                <textarea style="width: 250pt; max-width: 100%;" id="reviewTitle" placeholder="Title"></textarea>
+                <textarea id="reviewName" placeholder="Name" rows="2"></textarea>
+            </div>
+            
+            <textarea id="reviewBody" placeholder="Type your review here..." style="height: 100pt;width: 400pt; max-width: 90%; margin-top: 10pt;"></textarea>
+            <div>
+                <button style="margin-top: 10pt;margin-bottom: 50pt;" onclick="submitButtonClicked()">
+                    <div style="font-weight: bold; font-size: 15pt;font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;">Submit</div>
+                </button>
+            </div>
+            <b style="font-weight: bold; font-size: 40pt;">Most Recent Review</b>
+            <!-- <div style="padding-top: 25pt;padding-bottom: 100pt;"> -->
+            <b id="reviewDisplayTitle" class="review-font" style="font-weight: bold; font-size: 30pt; overflow-wrap: anywhere; ">No Reviews So Far. Write One!</b>
+            <b id="reviewDisplayName" class="review-font" style="font-size: 17pt; overflow-wrap: anywhere;"></b>
+            <b id="reviewDisplayBody" class="review-font" style="font-size: 15pt; overflow-wrap: anywhere; padding-bottom:5em;"></b>
+            <!-- </div> -->
+        </div>
+    </body>
+</html>
