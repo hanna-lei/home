@@ -5,22 +5,80 @@
         <title>Buy TanishO's Cereal</title>
         <style>
             .review-font {
-                font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; 
+                font-family: 'Gill Sans', 'Gill Sans MT', 'Calibri', 'Trebuchet MS', 'sans-serif'; 
             }
         </style>
         <script type="text/javascript">
-            let left = 3000000;
-            let bought = 0;
+            const total = 3000000;
+            const allFlavors = ["kiwi", "grass", "strawberry", "rotten", "original"];
+            const flavorSubtitle = {
+                "kiwi": "Kiwi Flavor",
+                "grass": "Grass Flavor, Cow-friendly",
+                "strawberry": "Strawberry Flavor",
+                "rotten": "Rotten Onion and Cabbage Flavor, Weirdo-friendly",
+                "original": "Original"
+            }
 
-            
+            let inCart = 0;
+            let flavor = "original";
+            let bought = {};
+
+            function box() {
+                return document.querySelector("#box");  
+            }
+            function name() {
+                return document.querySelector("#name");
+            }
+            function goToTop() {
+                location.href = "#top";
+            }
+            function flavorStrawberry() {
+                goToTop();
+                flavor = "strawberry";
+                update();
+            }
+            function flavorGrass() {
+                goToTop();
+                flavor = "grass";
+                update();
+            }
+            function flavorKiwi() {
+                goToTop();
+                flavor = "kiwi";
+                update();
+            }
+            function flavorRotten() {
+                goToTop();
+                flavor = "rotten";
+                update();
+            }
+            function flavorOriginal() {
+                goToTop();
+                flavor = "original";
+                update();
+            }
+            function amountLeft() {
+                return total - inCart - (bought[flavor] ?? 0);
+            }
             function update() {
-                getDisplayBought().innerText = bought;
+                getDisplayBought().innerText = inCart.toString();
+                const left = amountLeft();
                 if (left > 1) {
                     getDisplayLeft().innerText = left + " boxes left in stock";
-                } else if (left == 1) {
+                } else if (left === 1) {
                     getDisplayLeft().innerText = "1 box left in stock";
                 } else {
                     getDisplayLeft().innerText = "Out of Stock";
+                }
+
+                for (f of allFlavors) {
+                    if (f === flavor) {
+                        document.querySelector(`#${f}`).style.display = "none";
+                        name().innerText = `TanishO's (${flavorSubtitle[f]})`;
+                        box().src = `img/${f}.jpeg`;
+                    } else {
+                        document.querySelector(`#${f}`).style.display = "flex";
+                    }
                 }
             }
             function getDisplayBought() {
@@ -30,27 +88,24 @@
                 return document.querySelector("#leftNum");
             }
             function addButtonClicked() {
-                if (left > 0) {
-                    left -= 1;
-                    bought += 1;
-                    console.log(left, bought);
+                if (amountLeft() > 0) {
+                    inCart += 1;
                     update();
                 } else {
                     alert("We're out of stock!!! Stop buying!!!");
                 }
             }
             function minusButtonClicked() {
-                if (bought > 0) {
-                    left += 1;
-                    bought -= 1;
-                    console.log(left, bought);
+                if (inCart > 0) {
+                    inCart -= 1;
                     update();
                 }
             }
             function boughtClicked() {
-                let answer = prompt(`Are you SURE you want to buy ${bought} boxes of TanishO's?\nType YES for yes and NO for no.`);
-                if (answer.toLowerCase() == "yes") {
-                    bought = 0;
+                let answer = prompt(`Are you SURE you want to buy ${inCart} boxes of TanishO's?\nType YES for yes and NO for no.`);
+                if (answer.toLowerCase() === "yes") {
+                    bought[flavor] = (bought[flavor] ?? 0) + inCart;
+                    inCart = 0;
                     update();
                     alert("Estimated Shipping Time: Until you get better lightbulbs");
                 }
@@ -68,7 +123,7 @@
                 let reviewDisplayName = document.querySelector("#reviewDisplayName");
                 let reviewDisplayBody = document.querySelector("#reviewDisplayBody");
 
-                if (reviewName == "" || reviewTitle == "" || reviewBody == "") {
+                if (reviewName === "" || reviewTitle === "" || reviewBody === "") {
                     alert("Please fill in all areas.");
                 } else {
                     reviewDisplayTitle.innerText = reviewTitle;
@@ -87,15 +142,15 @@
         </script>
     </head>
     <body>
-        <div style="display: flex; flex-direction: column; width:100%;align-items: center;gap:15pt;">
+        <div id="top" style="display: flex; flex-direction: column; width:100%;align-items: center;gap:15pt;">
             
             <img src="img/title.png" style="padding-bottom: 20pt; max-width:80%">
             
             
             <div style="display: flex; flex-direction: row; max-width: 100%; align-items:top; overflow: hidden;flex-wrap:wrap; gap: 15pt; justify-content: space-evenly;">
-                <img src="img/box.png" style="padding-bottom: 100pt; height:auto; width: 380pt; max-width:100%;">
+                <img id="box" style="padding-bottom: 100pt; height:auto; width: 380pt; max-width:100%;">
                 <div style="display: flex; flex-direction: column; max-width: 380pt;">
-                    <b style="padding-bottom: 30pt;font-size: 3em;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">TanishO's (Original)</b>
+                    <b id="name" style="padding-bottom: 30pt;font-size: 3em;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;"></b>
                     <b style="font-size: 1.75em;padding-bottom: 2em;">Healthy cereal for young growing weirdos</b>
                     <b style="font-size: 1.75em;padding-bottom: 30pt;">25% less sugar than other cereal</b>
                     <b style="font-size: 1.75em;padding-bottom: 30pt;">SKINNY TINNY CERTIFIED!</b>
@@ -117,23 +172,27 @@
                 </div>
             </div>
             
-            <b style="font-size: 3em; text-align: center;">New Flavors Coming Soon!</b>
+            <b style="font-size: 3em; text-align: center;">Shop Our Other Flavors!</b>
             <div style="display: flex; flex-direction: row; gap: 10pt; padding-top: 1em; padding-bottom:1em; flex-wrap: wrap; justify-content: space-evenly;">
-                <div style="display: flex; flex-direction: column; align-items: center;">
-                    <img style="width: 100pt;padding-top: 300 pt;" src="img/strawberry.jpeg">
+                <div  id="strawberry" style="display: flex; flex-direction: column; align-items: center;">
+                    <img onclick="flavorStrawberry()" style="width: 100pt;padding-top: 300 pt;" src="img/strawberry.jpeg">
                     <b style="font-size: 1.5em; width: 180pt; text-align: center;">Strawberry</b>
                 </div>
-                <div style="display: flex; flex-direction: column; align-items: center;">
-                    <img style="width: 100pt;padding-top: 300 pt;" src="img/grass.jpeg">
+                <div id="grass" style="display: flex; flex-direction: column; align-items: center;">
+                    <img onclick="flavorGrass()" style="width: 100pt;padding-top: 300 pt;" src="img/grass.jpeg">
                     <b style="font-size: 1.5em; width: 180pt; text-align: center;">Grass Flavor (cow-friendly)</b>
                 </div>
-                <div style="display: flex; flex-direction: column; align-items: center;">
-                    <img style="width: 100pt; padding-top: 300 pt;" src="img/rotten.jpeg">
-                    <b style="font-size: 1.5em; width: 180pt; text-align: center;">Rotten Radish & Cabbage (weirdo-friendly)</b>
+                <div id="rotten" style="display: flex; flex-direction: column; align-items: center;">
+                    <img onclick="flavorRotten()" style="width: 100pt; padding-top: 300 pt;" src="img/rotten.jpeg">
+                    <b style="font-size: 1.5em; width: 180pt; text-align: center;">Rotten Onion & Cabbage (weirdo-friendly)</b>
                 </div>
-                <div style="display: flex; flex-direction: column; align-items: center;">
-                    <img style="width: 100pt; padding-top: 300 pt;" src="img/kiwi.jpeg">
+                <div id="kiwi" style="display: flex; flex-direction: column; align-items: center;">
+                    <img  onclick="flavorKiwi()"style="width: 100pt; padding-top: 300 pt;" src="img/kiwi.jpeg">
                     <b style="font-size: 1.5em; width: 180pt; text-align: center;">Kiwi</b>
+                </div>
+                <div id="original" style="display: none; flex-direction: column; align-items: center;">
+                    <img onclick="flavorOriginal()" style="width: 100pt; padding-top: 300 pt;" src="img/original.jpeg">
+                    <b style="font-size: 1.5em; width: 180pt; text-align: center;">Original</b>
                 </div>
             </div>
 
