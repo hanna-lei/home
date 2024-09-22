@@ -1,0 +1,80 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>Game
+        </title>
+        <style>
+        </style>
+        <script type="text/javascript">
+            function doc_keyDown(e) {
+                if (e.code === 'ArrowLeft') {
+                    leftButtonClicked();
+                }
+                if (e.code === 'ArrowRight') {
+                    rightButtonClicked();
+                }
+                if (e.code ==='ArrowUp') {
+                    upButtonClicked();
+                }
+                if (e.code === 'ArrowDown') {
+                    downButtonClicked();
+                }
+            }
+            document.addEventListener('keydown', doc_keyDown, false);
+            function getPerson() {
+                return document.getElementById("person");
+            }
+            function getBunny() {
+                return document.getElementById("bunny");
+            }
+            function upButtonClicked() {
+                const newNumber = parseInt(getBunny().style.paddingTop) - 10;
+                
+                getBunny().style.paddingTop = `${newNumber}pt`;
+                console.log(`${newNumber}, getBunny().style.paddingTop: ${getBunny().style.paddingTop}`);
+            }
+            function downButtonClicked() {
+                const newNumber = parseInt(getBunny().style.paddingTop) + 10;
+                if (parseInt(getBunny().style.paddingTop) <= 190) {
+                    getBunny().style.paddingTop = `${newNumber}pt`;
+                    console.log(`${newNumber}, getBunny().style.paddingTop: ${getBunny().style.paddingTop}`);
+                }
+            }
+            function leftButtonClicked() {
+                const newNumber = parseInt(getPerson().style.paddingLeft) - 10;
+                
+                getPerson().style.paddingLeft = `${newNumber}pt`
+                console.log(`${newNumber}, getPerson().style.paddingLeft: ${getPerson().style.paddingLeft}`)
+            }
+            function rightButtonClicked() {
+                const newNumber = parseInt(getPerson().style.paddingLeft) + 10;
+                
+                getPerson().style.paddingLeft = `${newNumber}pt`
+                console.log(`${newNumber}, getPerson().style.paddingLeft: ${getPerson().style.paddingLeft}`)
+            }
+            window.addEventListener('load', function(e) {
+                
+            }, false);
+
+        </script>
+    </head>
+    <body>
+        <img id="person" src="img/persongif.gif" style="width: 50pt;padding-left: 30pt;"/>
+        <div style="display: flex; flex-direction: column; max-width: 100%; align-items:center; overflow: hidden;flex-wrap:wrap; gap: 15pt; justify-content: space-evenly;">
+            <h1>Press the buttons or arrow keys to move the person.</h1>
+            <div style="display: flex; flex-direction: row; max-width: 100%; align-items:center; overflow: hidden;flex-wrap:wrap; gap: 15pt; justify-content: space-evenly;">
+                <button onclick="leftButtonClicked()" style="font-size: 20pt; width: 100pt;height: 40pt;">Left</button>
+                <button onclick="rightButtonClicked()"style="font-size: 20pt;width: 100pt;height: 40pt;">Right</button>
+            </div>
+        </div>
+        <img id="bunny" src="img/bunny.gif" style="width: 50pt;padding-top: 100pt;margin-left: auto;margin-right: auto;"/>
+        <div style="display: flex; flex-direction: column; max-width: 100%; align-items:center; overflow: hidden;flex-wrap:wrap; gap: 15pt; justify-content: space-evenly;">
+            <h1>Press the buttons or arrow keys to move the bunny.</h1>
+            <div style="display: flex; flex-direction: column; max-width: 100%; align-items:center; overflow: hidden;flex-wrap:wrap; gap: 15pt; justify-content: space-evenly;">
+                <button onclick="upButtonClicked()" style="font-size: 20pt; width: 100pt;height: 40pt;">Up</button>
+                <button onclick="downButtonClicked()"style="font-size: 20pt;width: 100pt;height: 40pt;">Down</button>
+            </div>
+        </div>
+    </body>
+</html>
